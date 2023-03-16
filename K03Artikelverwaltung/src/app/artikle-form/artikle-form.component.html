@@ -1,0 +1,84 @@
+<form fxLayout="column" [formGroup]="artikleForm" autocomplete="off">
+
+  <mat-form-field fxFlex>
+    <input matInput formControlName="id" placeholder="Id" type="text" [attr.disabled]="newItem == false">
+    <mat-error *ngIf="artikleForm.get('id')?.hasError('required')">Die ID muss eingegeben werden</mat-error>
+    <mat-error *ngIf="artikleForm.get('id')?.hasError('idFormat') && !artikleForm.get('id')?.hasError('required')">
+      Die ID muss mit IT oder DE beginnen, wenn sie mit IT beginnt müssen 6 Zeichen folgen bei DE 8
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field fxFlex>
+    <input matInput formControlName="description" placeholder="Beschreibung" type="text">
+    <mat-error>Die Beschreibung muss eingegeben werden</mat-error>
+  </mat-form-field>
+
+  <mat-form-field fxFlex>
+    <input matInput formControlName="number" placeholder="Anzahl" type="number" min="0">
+    <mat-error *ngIf="artikleForm.get('number')?.hasError('noCommas')">
+      Es dürfen nur ganzzahlige Anzahlen eingegeben werden
+    </mat-error>
+    <mat-error
+      *ngIf="artikleForm.get('number')?.hasError('greaterZero') && !artikleForm.get('number')?.hasError('noCommas')">
+      Es muss eine Zahl die größer als 0 ist eingegeben werden
+    </mat-error>
+  </mat-form-field>
+
+  <div fxLayout="row" formGroupName="prices">
+    <mat-form-field fxFlex>
+      <input matInput formControlName="purchasingPrice" placeholder="Einkaufspreis" type="number" min="0" step="0.1"
+        [errorStateMatcher]="pricesErrorMatcher">
+      <mat-error
+        *ngIf="artikleForm.get('prices')?.hasError('purchasingGreaterRetail') && !artikleForm.get('prices')?.get('purchasingPrice')?.hasError('greaterZero')">
+        Einkaufspreis muss kleiner als der Verkaufspreis sein</mat-error>
+      <mat-error *ngIf="artikleForm.get('prices')?.get('purchasingPrice')?.hasError('greaterZero')">Das Feld muss leer
+        sein oder die Zahl muss größer 0 sein</mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex style="margin-left: 10px;">
+      <input matInput formControlName="retailPrice" placeholder="Verkaufspreis" type="number" min="0" step="0.1">
+      <mat-error *ngIf="artikleForm.get('prices')?.get('retailPrice')?.hasError('greaterZero')">Das Feld muss leer sein
+        oder die Zahl muss größer 0 sein</mat-error>
+    </mat-form-field>
+  </div>
+
+  <mat-form-field fxFlex>
+    <input matInput formControlName="launchDate" placeholder="Einführungsdatum" type="date">
+    <mat-error>Das Einführungsdatum muss eingegeben werden</mat-error>
+  </mat-form-field>
+
+  <div fxFlex fxLayout="column" formArrayName="pictures">
+    <div fxFlex *ngFor="let control of pictures.controls; index as i" [formGroupName]="i">
+
+      <mat-form-field fxFlex>
+        <input matInput formControlName="url" placeholder="URL" type="text" [errorStateMatcher]="picturesErrorMatcher">
+        <mat-error
+          *ngIf="artikleForm.get('pictures')?.hasError('differentURLs') && !pictures.controls[i].get('url')?.hasError('required')">
+          Jede URL darf nur einmal vorkommen</mat-error>
+        <mat-error *ngIf="pictures.controls[i].get('url')?.hasError('required')">URL muss eingegeben werden
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex style="margin-left: 10px; margin-right: 10px;">
+        <input matInput formControlName="title" placeholder="Titel" type="text">
+      </mat-form-field>
+
+      <button style="margin-right: 10px;" mat-mini-fab color="primary"
+        [disabled]="pictures.value.length===1 ? 'true' : 'false'" type="button" (click)="removePictureControl(i)">
+        <mat-icon>remove</mat-icon>
+      </button>
+      <button style="margin-right: 10px;" *ngIf="i==pictures.controls.length - 1" mat-mini-fab color="primary"
+        type="button" (click)="addPictureControl()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+  </div>
+
+  <div fxLayout="row">
+    <button fxFlex color="primary" mat-raised-button (click)="submit()" [disabled]="!artikleForm.valid"
+      style="margin-right: 5px;">{{ newItem ? "Speichern" : "Ändern" }}</button>
+    <button fxFlex color="accent" mat-raised-button (click)="delete()" [disabled]="!artikleForm.valid"
+      *ngIf="newItem != true" style="margin-left: 5px;">Löschen</button>
+  </div>
+</form>

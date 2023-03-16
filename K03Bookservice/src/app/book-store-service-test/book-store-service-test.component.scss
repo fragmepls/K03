@@ -1,0 +1,87 @@
+.deletebox {
+    display: inline-block;
+    background-color: red;
+    width: 63.141px;
+    border-radius: 5px;
+    padding: 3px;
+}
+
+.deletebox::after {
+    content: "DELETE";
+}
+
+.getbox {
+    display: inline-block;
+    background-color: blue;
+    width: 63.141px;
+    border-radius: 5px;
+    padding: 3px;
+}
+
+.getbox::after {
+    content: "GET";
+}
+.postbox {
+    display: inline-block;
+    background-color: green;
+    width: 63.141px;
+    border-radius: 5px;
+    padding: 3px;
+}
+.postbox::after {
+    content: "POST";
+}
+.putbox {
+    display: inline-block;
+    background-color: maroon;
+    width: 63.141px;
+    border-radius: 5px;
+    padding: 3px;
+}
+.putbox::after {
+    content: "PUT";
+}
+
+.text {
+    font-size: large;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+tr {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+p {
+    display: inline-block;
+}
+
+.delete {
+  border-color: red;
+}
+
+.button{
+  width: 400px;
+  float: right;
+  margin-right: 10px;
+}
+
+.get{
+  border-color: blue;
+}
+
+.post{
+  border-color: green;
+}
+
+.put{
+  border-color: maroon;
+}

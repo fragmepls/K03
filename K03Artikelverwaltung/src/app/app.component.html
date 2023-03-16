@@ -1,0 +1,16 @@
+<h1>Artikelverwaltung</h1>
+<nav mat-tab-nav-bar backgroundColor="primary" color="accent">
+    <a mat-tab-link routerLink="/artikelList" routerLinkActive #listTab="routerLinkActive" [active]="listTab.isActive">
+    Artikelliste
+  </a>
+    <a mat-tab-link routerLink="/newArtikle" routerLinkActive #newTab="routerLinkActive" [active]="newTab.isActive">
+    Neuer Artikel
+  </a>
+    <a mat-tab-link routerLink="/error/deleteAll" routerLinkActive #deleteAll="routerLinkActive" [active]="deleteAll.isActive">
+    Alle Artikel löschen
+  </a>
+    <a mat-tab-link routerLink="/error/recreateAll" routerLinkActive #recreateAll="routerLinkActive" [active]="recreateAll.isActive">
+    Alle Artikel neu anlegen
+  </a>
+</nav>
+<router-outlet></router-outlet>

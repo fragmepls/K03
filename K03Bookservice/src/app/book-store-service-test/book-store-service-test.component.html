@@ -1,0 +1,151 @@
+<table>
+  <tr>
+    <td>
+      <div class="deletebox text"></div>
+      <p>/books</p>
+    </td>
+    <td></td>
+    <td></td>
+    <td><button mat-stroked-button class="delete button" (click)="this.resetStore()">Resets store to initial
+        state</button></td>
+  </tr>
+  <tr>
+    <td>
+      <div class="getbox text"></div>
+      <p>/books</p>
+    </td>
+    <td></td>
+    <td></td>
+    <td><button mat-stroked-button class="get button" (click)="this.getAllBooks()">Get all books</button></td>
+  </tr>
+  <tr>
+    <td>
+      <div class="getbox text"></div>
+      <p>{{"/books/search/{searchTerm}"}}</p>
+    </td>
+    <td>
+      <mat-form-field>
+        <mat-label>searchTerm</mat-label><input matInput type="text" #searchTerm>
+      </mat-form-field>
+    </td>
+    <td></td>
+    <td><button mat-stroked-button class="get button" (click)="getAllBooksSearchTerm(searchTerm.value)">Get all books
+        matching search term</button></td>
+  </tr>
+  <tr>
+    <td>
+      <div class="postbox text"></div>
+      <p>/book</p>
+    </td>
+    <td></td>
+    <td></td>
+    <td><button mat-stroked-button class="post button" (click)="this.createBook()">Creates a new (random) book</button><br>
+      <button mat-stroked-button class="post button" (click)="this.createBookWithISBN()" [disabled]="this.book == null">Creates a new (random) book with existing ISBN</button>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <div class="deletebox text"></div>
+      <p>{{"/book/{ISBN}"}}</p>
+    </td>
+    <td>
+      <mat-form-field>
+        <mat-label>ISBN</mat-label><input matInput type="text" #deleteISBN>
+      </mat-form-field>
+    </td>
+    <td></td>
+    <td><button mat-stroked-button class="delete button" (click)="this.deleteBook(deleteISBN.value)">Deletes a
+        book</button></td>
+  </tr>
+  <tr>
+    <td>
+      <div class="getbox text"></div>
+      <p>{{"/book/{ISBN}"}}</p>
+    </td>
+    <td>
+      <mat-form-field>
+        <mat-label>ISBN</mat-label><input matInput type="text" #getBookISBN>
+      </mat-form-field>
+    </td>
+    <td></td>
+    <td><button mat-stroked-button class="get button" (click)="this.getBook(getBookISBN.value)">Returns a single book by
+        ISBN</button></td>
+  </tr>
+  <tr>
+    <td>
+      <div class="putbox text"></div>
+      <p>{{"/book/{ISBN}"}}</p>
+    </td>
+    <td>
+      <mat-form-field>
+        <mat-label>ISBN</mat-label><input matInput type="text" #updateBookISBN>
+      </mat-form-field>
+    </td>
+    <td></td>
+    <td><button mat-stroked-button class="put button" (click)="this.updateBook(updateBookISBN.value)">Updates an
+        existing book</button></td>
+  </tr>
+  <tr>
+    <td>
+      <div class="getbox text"></div>
+      <p>{{"/book/{ISBN}/check"}}</p>
+    </td>
+    <td>
+      <mat-form-field>
+        <mat-label>ISBN</mat-label><input matInput type="text" #checkBookISBN>
+      </mat-form-field>
+    </td>
+    <td></td>
+    <td><button mat-stroked-button class="get button" (click)="this.checkBook(checkBookISBN.value)">Return whether ISBN
+        exists or not</button></td>
+  </tr>
+  <tr>
+    <td>
+      <div class="postbox text"></div>
+      <p>{{"/book/{ISBN}/rate"}}/</p>
+    </td>
+    <td>
+      <mat-form-field>
+        <mat-label>ISBN</mat-label><input matInput type="text" #rateBookISBN>
+      </mat-form-field>
+
+    </td>
+    <td>
+      <mat-form-field>
+        <mat-label>rating</mat-label><input matInput type="text" #rateBookRating>
+      </mat-form-field>
+    </td>
+    <td><button mat-stroked-button class="post button"
+        (click)="this.rateBook(rateBookISBN.value,rateBookRating.value)">Updates rating of a book to a given
+        value</button></td>
+  </tr>
+</table>
+
+<h2>Ausgaben:</h2>
+
+
+<div *ngIf="error">
+  <h2>Error</h2>
+  <b>Status:</b> {{ error?.status }}<br>
+  <b>StatusText:</b> {{ error?.statusText }}<br>
+  <b>ok:</b> {{ error?.ok }}<br>
+  <b>message:</b> {{ error?.message }}
+</div>
+<div *ngIf="response">
+  <h2>Response</h2>
+  <b>Status:</b> {{ response?.status }}<br>
+  <b>StatusText:</b> {{ response?.statusText }}<br>
+  <b>ok:</b> {{ response?.ok }}<br>
+  <b>body:</b> {{ response?.body }}
+</div>
+
+<div *ngFor="let book of books">
+  <b>Title: </b>
+  <p>{{book.title}}</p>
+  <b> ISBN:</b>
+  <p>{{book.isbn}}</p>
+  <b> Autoren: </b>
+  <p>{{book.authors}}</p>
+  <b> Bewertung: </b>
+  <p>{{book.rating}}</p>
+</div>
